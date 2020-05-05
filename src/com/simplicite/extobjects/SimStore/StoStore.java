@@ -122,7 +122,7 @@ public class StoStore extends ExternalObject {
 	private static String getModuleSettingsFromApp(JSONObject app){
 		String settings;
 		try{
-			settings = app.getJSONObject("module_settings").toString();;
+			settings = app.getJSONObject("module_settings").toString();
 		}
 		catch(Exception e){
 			settings = app.optString("module_settings");

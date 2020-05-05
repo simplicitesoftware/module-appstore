@@ -37,7 +37,7 @@ To import this module:
 
 ### Configure
 
-The URL(s) of your store file(s) is in the `` system parameter.
+The URL(s) of the store file(s) is in the `STORE_SOURCE` system parameter.
 
 ### Quality
 
@@ -51,6 +51,6 @@ mvn verify sonar:sonar
 `StoStore` external object definition
 -------------------------------------
 
-
+Custom page for adding/removing modules from the stores
 
 

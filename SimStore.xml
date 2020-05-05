@@ -40,7 +40,7 @@ To import this module:
 
 ### Configure
 
-The URL(s) of your store file(s) is in the `` system parameter.
+The URL(s) of the store file(s) is in the `STORE_SOURCE` system parameter.
 
 ### Quality
 
@@ -158,7 +158,7 @@ mvn verify sonar:sonar
 		<obe_name>StoStore</obe_name>
 		<obe_type>E</obe_type>
 		<obe_url/>
-		<obe_comment/>
+		<obe_comment><![CDATA[Custom page for adding/removing modules from the stores]]></obe_comment>
 		<obe_help/>
 		<obe_class/>
 		<obe_script_id>src/com/simplicite/extobjects/SimStore/StoStore.java</obe_script_id>

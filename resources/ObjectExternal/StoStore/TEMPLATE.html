@@ -1,0 +1,46 @@
+<script id="tmplStore" type="text/template">
+	<div>
+		<ul class="nav nav-tabs">
+			{{#stores}}
+		    <li href="#" class="nav-item nav-link" data-tab="{{idx}}"><a href="#">{{name}}</a></li>
+		    {{/stores}}
+		</ul>
+		{{#stores}}
+		<div id="tab{{idx}}" class="tabitem store-container">
+		    <div class="storegrid">
+		    	{{#apps}}
+		        <div class="storegrid__item">
+		            <div class="storecard">
+		                <img class="storecard__img" src="{{logo}}" alt="{{name}} app logo">
+		                <div class="storecard__content">
+		                    <h1 class="storecard__header">{{name}}</h1>
+		                    <p class="storecard__text">{{description}}</p>
+		                    <div class="storecard__buttoncontainer">
+		                    {{#module_installed}}
+		                        <button
+			                        type="button" 
+			                        class="btn btn-primary goto-module"
+			                        data-module-id="{{module_installed}}">{{tsl_goto_module}}</button>
+		                        <button 
+			                        type="button" 
+			                        class="btn btn-danger goto-delete"
+			                        data-module-id="{{module_installed}}">{{tsl_goto_delete}}</button>
+		                    {{/module_installed}}
+		                    {{^module_installed}}
+		                        <button 
+		                            type="button" 
+		                            class="btn btn-success install-module"
+		                            data-module="{{module_name}}" 
+		                            data-store-idx="{{store_idx}}">{{tsl_install_module}}</button>
+		                    {{/module_installed}}
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		        {{/apps}}
+		    </div>
+		</div>
+		{{/stores}}
+	</div>
+</script>
+<div id="store"></div>

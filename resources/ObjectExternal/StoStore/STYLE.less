@@ -1,0 +1,97 @@
+@color-header: #0d0d0d;
+@color-text: #404040;
+
+@color-btn-text: #3363ff;
+@color-btn-background: #e6ecff;
+
+@transition: .1s;
+
+#store .nav-link a:hover{
+	text-decoration:none;
+}
+
+.store-container{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 1rem;
+  font-family: "Inter", sans-serif;
+  background-color: #ffffff;
+}
+
+// MAIN CONTENT
+.storegrid {
+  display: grid;
+  width: 100%;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: start;
+  
+  &__item {
+    background-color: #fff;
+    border-radius: .4rem;
+    overflow: hidden;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, .1);
+    transition: @transition;
+    
+    &:hover {
+      transform: translateY(-.5%);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+    }
+  }
+}
+
+.storecard {
+  &__img {
+    display: block;
+    width: 100%;
+    height: 20vh;
+    background: #d0eaf3;
+   }
+  
+  &__content {
+    padding: 1rem 1rem;
+  }
+  
+  &__header {
+    font-weight: 500;
+    color: @color-header;
+  }
+  
+  &__text {
+    color: darken(@color-text, 1%);
+    margin-bottom: 1rem;
+  }
+  
+  &__buttoncontainer{
+  	text-align: center;
+  }
+  
+  &__btn {
+    display: block;
+    //width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    text-align: center;
+    color: @color-btn-text;
+    background-color: @color-btn-background;
+    border: none;
+    border-radius: .4rem;
+    transition: @transition;
+    cursor: pointer;
+    
+    span {
+      margin-left: 0.5rem;
+      transition: @transition;
+    }
+    
+    &:hover,
+    &:active {
+      background-color: darken( @color-btn-background, 2%);
+      
+        span {
+        margin-left: 1.5rem;
+      }
+    }
+  }
+}

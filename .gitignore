@@ -1,0 +1,15 @@
+/bin
+/build
+/target
+/effective.pom
+/.project
+/.classpath
+/.settings
+/.idea
+/*.iml
+/.scannerwork
+/.gradle
+/.vscode
+/.theia
+/**/Thumbs.db
+/**/.DS_Store

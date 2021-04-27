@@ -4,6 +4,6 @@
     "format": "xml",
     "files": ["SimStore.xml"],
     "repository": {"origin": {"uri": "https://github.com/simplicitesoftware/module-simstore.git"}},
-    "version": "1.0",
+    "version": "1.1",
     "platform": "5.2.0-alpha"
 }

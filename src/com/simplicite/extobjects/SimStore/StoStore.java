@@ -2,6 +2,7 @@ package com.simplicite.extobjects.SimStore;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONException;
 
 import com.simplicite.objects.System.Module;
 import com.simplicite.util.AppLog;
@@ -42,25 +43,35 @@ public class StoStore extends ExternalObject {
 
 	private JSONObject getData(Grant g) throws Exception{
 		JSONArray stores = new JSONArray();
-		String[] sources = g.getParameter("STORE_SOURCE").split("\r\n");
-		for (int i=0; i<sources.length; i++) {
-			JSONObject store = new JSONObject(Tool.readUrl(sources[i]));
+		String s = g.getParameter("STORE_SOURCE", "[]");
+		JSONArray sources;
+		try {
+			sources = new JSONArray(s);
+		} catch (JSONException e) {
+			sources = new JSONArray(s); // old syntax (single store)
+		}
+		for (int i=0; i<sources.length(); i++) {
+			try {
+				JSONObject store = new JSONObject(Tool.readUrl(sources.getString(i)));
 
-			// use a store id to identify tabs
-			store.put("idx", i);
-			if (!store.has("name"))
-				store.put("name", "AppStore "+(sources.length>1 ? i+1 : ""));
-
-			// facilitate install status
-			JSONArray apps = store.getJSONArray("apps");
-			for (int j=0; j<apps.length(); j++) {
-				apps.getJSONObject(j).put(
-					"module_installed",
-					moduleId(apps.getJSONObject(j).optString("module_name"), getGrant())
-				);
-				apps.getJSONObject(j).put("store_idx", i);
+				// use a store id to identify tabs
+				store.put("idx", i);
+				if (!store.has("name"))
+					store.put("name", "AppStore "+(sources.length()>1 ? i+1 : ""));
+	
+				// facilitate install status
+				JSONArray apps = store.getJSONArray("apps");
+				for (int j=0; j<apps.length(); j++) {
+					apps.getJSONObject(j).put(
+						"module_installed",
+						moduleId(apps.getJSONObject(j).optString("module_name"), getGrant())
+					);
+					apps.getJSONObject(j).put("store_idx", i);
+				}
+				stores.put(store);
+			} catch (Exception e) {
+				AppLog.error(getClass(), "getData", null, e, getGrant());
 			}
-			stores.put(store);
 		}
 
 		JSONObject data = new JSONObject();

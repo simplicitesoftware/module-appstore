@@ -57,12 +57,14 @@ mvn verify sonar:sonar
 	<action>upsert</action>
 	<data>
 		<sys_code>STORE_SOURCE</sys_code>
-		<sys_value><![CDATA[https://docs.simplicite.io/appstore_demo.json
-https://docs.simplicite.io/appstore_apps.json
-https://docs.simplicite.io/appstore_tools.json]]></sys_value>
+		<sys_value><![CDATA[[
+	"https://docs.simplicite.io/appstore_demo.json", 
+	"https://docs.simplicite.io/appstore_apps.json",
+	"https://docs.simplicite.io/appstore_tools.json"
+]]]></sys_value>
 		<sys_value2/>
 		<sys_type>PRV</sys_type>
-		<sys_desc><![CDATA[URL of stores for the app store. One URL by line.]]></sys_desc>
+		<sys_desc><![CDATA[URL of stores for the app store (JSON array)]]></sys_desc>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
 </object>

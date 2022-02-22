@@ -1,0 +1,26 @@
+{
+ "res_object": {
+  "item": {"obe_name": "StoStore"},
+  "icon": "img/system/external_object",
+  "label": "External object",
+  "row_id": "2015",
+  "userkeylabel": "StoStore",
+  "object": "ObjectExternal"
+ },
+ "res_type": "JS",
+ "res_lang": "ANY",
+ "res_code": "SCRIPT",
+ "res_cached": false,
+ "res_file": {
+  "path": "resources/ObjectExternal/StoStore/SCRIPT.js",
+  "size": 1988,
+  "field": "res_file",
+  "mime": "text/javascript",
+  "name": "SCRIPT.js",
+  "id": "2911",
+  "object": "Resource",
+  "rowid": "291"
+ },
+ "res_image": null,
+ "row_module_id__mdl_name": "SimStore"
+}

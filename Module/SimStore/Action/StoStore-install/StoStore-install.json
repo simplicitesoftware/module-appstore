@@ -1,0 +1,19 @@
+{
+ "act_name": "StoStore-install",
+ "act_type": "H",
+ "act_async": "0",
+ "act_job_depth": null,
+ "act_method": "install",
+ "act_script": null,
+ "act_url": null,
+ "act_image": null,
+ "act_confirm": false,
+ "act_confirm_expr": null,
+ "act_confirm_ui": null,
+ "act_plus": false,
+ "act_comment": null,
+ "row_module_id__mdl_name": "SimStore",
+ "act_exec": "BCK",
+ "act_count": null,
+ "act_order": null
+}

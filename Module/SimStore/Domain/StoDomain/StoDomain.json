@@ -1,0 +1,11 @@
+{
+ "obd_name": "StoDomain",
+ "obd_comment": null,
+ "obd_type": "D",
+ "obd_view_id__viw_name": null,
+ "obd_nohome": true,
+ "obd_icon": "img/color/shop",
+ "obd_order": 97000,
+ "obd_domain_id__obd_name": null,
+ "row_module_id__mdl_name": "SimStore"
+}

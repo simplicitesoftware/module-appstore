@@ -1,0 +1,10 @@
+{
+ "grt_group_id__grp_name": "STO_ADMIN",
+ "grt_function_id__fct_name": "STO_STORE_STOSTOREINSTALL_A",
+ "grt_function_id__fct_object_id__obj_type": "E",
+ "grt_function_id__fct_object_id__obj_name": "StoStore",
+ "grt_function_id__fct_action_id__act_name": "StoStore-install",
+ "grt_function_id__fct_function": "A",
+ "grt_activ": true,
+ "row_module_id__mdl_name": "SimStore"
+}

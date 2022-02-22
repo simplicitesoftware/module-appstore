@@ -1,0 +1,20 @@
+{
+ "obe_name": "StoStore",
+ "obe_type": "E",
+ "obe_url": null,
+ "obe_comment": "Custom page for adding/removing modules from the stores",
+ "obe_help": null,
+ "obe_class": null,
+ "obe_script_id": {
+  "path": "src/com/simplicite/extobjects/SimStore/StoStore.java",
+  "size": 4463,
+  "field": "obe_script_id",
+  "mime": "text/plain",
+  "name": "StoStore.java",
+  "id": "2913",
+  "object": "ObjectExternal",
+  "rowid": "2015"
+ },
+ "obe_icon": null,
+ "row_module_id__mdl_name": "SimStore"
+}

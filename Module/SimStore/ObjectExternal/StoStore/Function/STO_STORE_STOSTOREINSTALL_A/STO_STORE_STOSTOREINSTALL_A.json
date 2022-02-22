@@ -1,0 +1,9 @@
+{
+ "fct_name": "STO_STORE_STOSTOREINSTALL_A",
+ "fct_object_id__obj_type": "E",
+ "fct_object_id__obj_name": "StoStore",
+ "fct_function": "A",
+ "fct_action_id__act_name": "StoStore-install",
+ "fct_view_id__viw_name": null,
+ "row_module_id__mdl_name": "SimStore"
+}

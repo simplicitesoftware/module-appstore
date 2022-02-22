@@ -77,7 +77,6 @@ public class StoStore extends ExternalObject {
 		JSONObject data = new JSONObject();
 		// facilitate install url
 		data.put("install_url", HTMLTool.getExternalObjectURL("StoStore"));
-		data.put("delete_url", HTMLTool.getExternalObjectURL("ModuleDelete", "nav=add&row_id="));
 		data.put("stores", stores);
 		return data;
 	}

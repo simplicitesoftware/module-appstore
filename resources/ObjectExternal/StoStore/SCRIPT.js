@@ -15,10 +15,10 @@ var Store = (function() {
 		
 		r.find('.install-module').click(callInstall);
 		r.find('.goto-module').click(function() {
-			$ui.clickReference(null, "Module", $(this).data('module-id'));
+			$ui.openForm(null, "Module", $(this).data('module-id'));
 		});
 		r.find('.goto-delete').click(function() {
-			$ui.loadURL(null, data.delete_url+$(this).data('module-id'));
+			$ui.displayModuleDelete(null, $(this).data('module-id'));
 		});
 		$('#store').html(r);
 	}

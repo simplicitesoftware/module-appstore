@@ -6,14 +6,14 @@
 	<data>
 		<mdl_name>SimStore</mdl_name>
 		<mdl_version>1.2</mdl_version>
-		<mdl_prefix/>
+		<mdl_prefix>sto</mdl_prefix>
 		<mdl_url><![CDATA[{
 	"type": "git",
 	"origin": {
 		"uri": "https://github.com/simplicitesoftware/module-simstore.git"
 	}
 }]]></mdl_url>
-		<mdl_lastupd>2020-05-03 12:44:37</mdl_lastupd>
+		<mdl_type>X</mdl_type>
 		<mdl_comment><![CDATA[[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=simplicite-modules-SimStore&metric=alert_status)](https://sonarcloud.io/dashboard?id=simplicite-modules-SimStore)
 
 ### Introduction
@@ -287,7 +287,6 @@ mvn verify sonar:sonar
 		<res_code>STYLE</res_code>
 		<res_cached>0</res_cached>
 		<res_file>resources/ObjectExternal/StoStore/STYLE.less</res_file>
-		<res_file_compiled>resources/ObjectExternal/StoStore/STYLE.min.css</res_file_compiled>
 		<res_image/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
@@ -305,7 +304,6 @@ mvn verify sonar:sonar
 		<res_code>TEMPLATE</res_code>
 		<res_cached>0</res_cached>
 		<res_file>resources/ObjectExternal/StoStore/TEMPLATE.html</res_file>
-		<res_file_compiled/>
 		<res_image/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
@@ -323,7 +321,6 @@ mvn verify sonar:sonar
 		<res_code>SCRIPT</res_code>
 		<res_cached>0</res_cached>
 		<res_file>resources/ObjectExternal/StoStore/SCRIPT.js</res_file>
-		<res_file_compiled>resources/ObjectExternal/StoStore/SCRIPT.min.js</res_file_compiled>
 		<res_image/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>

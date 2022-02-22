@@ -1,9 +1,0 @@
-{
- "lov_name": "TEXT",
- "lov_code": "STO_FRONT_TEXTS",
- "lov_lang": "FRA",
- "lov_value": "{\n\t\"tsl_app_name\": \"Nom de l'application\",\n\t\"tsl_app_logo\": \"Logo\",\n\t\"tsl_app_description\": \"Description\",\n\t\"tsl_mdl_name\": \"Nom du Module\",\n\t\"tsl_mdl_settings\": \"Paramètres du Module\",\n\t\"tsl_mdl_id\": \"Identifiant du Module\",\n\t\"tsl_action\": \"Action\",\n\t\"tsl_goto_module\": \"Configurer\",\n\t\"tsl_install_module\": \"Installer\",\n\t\"tsl_goto_delete\": \"Supprimer\",\n\t\"tsl_installed_module\": \"Le module a été correctement installé, voulez-vous vider le cache?\"\n}",
- "lov_order_by": 1,
- "lov_event_id__lev_code": null,
- "row_module_id__mdl_name": "SimStore"
-}

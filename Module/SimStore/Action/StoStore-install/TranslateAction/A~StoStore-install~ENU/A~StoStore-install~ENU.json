@@ -1,8 +1,0 @@
-{
- "tsl_typeAction": "A",
- "tsl_id__act_name": "StoStore-install",
- "tsl_lang": "ENU",
- "tsl_value": "STO_STORE_INSTALL",
- "tsl_simplehelp": null,
- "row_module_id__mdl_name": "SimStore"
-}

@@ -1,8 +1,0 @@
-{
- "map_domain_id__obd_name": "StoDomain",
- "map_object_id__obj_name": "StoStore",
- "map_process_id__pcs_name": null,
- "map_order": 97000,
- "map_ext": false,
- "row_module_id__mdl_name": "SimStore"
-}

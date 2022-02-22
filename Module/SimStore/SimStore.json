@@ -1,8 +1,0 @@
-{
- "mdl_name": "SimStore",
- "mdl_prefix": "sto",
- "mdl_version": "1.2",
- "mdl_type": "X",
- "mdl_url": "{\n\t\"type\": \"git\",\n\t\"origin\": {\n\t\t\"uri\": \"https://github.com/simplicitesoftware/module-simstore.git\"\n\t}\n}",
- "mdl_comment": "[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=simplicite-modules-SimStore&metric=alert_status)](https://sonarcloud.io/dashboard?id=simplicite-modules-SimStore)\n\n### Introduction\n\nThis is a **application store** management module.\n\n### Import\n\nTo import this module:\n\n- Create a module named `SimStore`\n- Set the settings as:\n\n```json\n{\n\t\"type\": \"git\",\n\t\"origin\": {\n\t\t\"uri\": \"https://github.com/simplicitesoftware/module-simstore.git\"\n\t}\n}\n```\n\n- Click on the _Import module_ button\n\n### Configure\n\nThe URL(s) of the store file(s) is in the `STORE_SOURCE` system parameter.\n\n### Quality\n\nThis module can be analysed by the **SonarQube** analysis tool\nusing this command:\n\n```bash\nmvn verify sonar:sonar\n```"
-}

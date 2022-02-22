@@ -1,8 +1,0 @@
-{
- "sys_code": "STORE_SOURCE",
- "sys_value": "[\n\t\"https://docs.simplicite.io/appstore_demo.json\", \n\t\"https://docs.simplicite.io/appstore_apps.json\",\n\t\"https://docs.simplicite.io/appstore_tools.json\"\n]",
- "sys_value2": null,
- "sys_type": "PRV",
- "sys_desc": "URL of stores for the app store (JSON array)",
- "row_module_id__mdl_name": "SimStore"
-}

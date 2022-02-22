@@ -1,8 +1,8 @@
 {
-    "date": "2022-02-22 14:55:05",
+    "date": "2022-02-22 14:52:39",
     "name": "SimStore",
-    "format": "json",
-    "files": ["SimStore.json"],
+    "format": "xml",
+    "files": ["SimStore.xml"],
     "repository": {"origin": {"uri": "https://github.com/simplicitesoftware/module-simstore.git"}},
     "version": "1.2",
     "platform": "5.2.0-beta"

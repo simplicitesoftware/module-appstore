@@ -4,10 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
 
-import com.simplicite.objects.System.Module;
 import com.simplicite.util.AppLog;
 import com.simplicite.util.ExternalObject;
 import com.simplicite.util.Grant;
+import com.simplicite.util.ObjectDB;
 import com.simplicite.util.Tool;
 import com.simplicite.util.tools.HTMLTool;
 import com.simplicite.util.tools.Parameters;
@@ -103,7 +103,7 @@ public class StoStore extends ExternalObject {
 			throw new Exception("STO_ERR_MODULE_ALREADY_PRESENT");
 		}
 		else {
-			Module module = (Module) g.getTmpObject("Module");
+			ObjectDB module = g.getTmpObject("Module");
 			module.setFieldValue("mdl_name", app.getString("module_name"));
 			module.setFieldValue("mdl_version", "1");
 			module.setFieldValue("mdl_url", getModuleSettingsFromApp(app));
@@ -113,7 +113,7 @@ public class StoStore extends ExternalObject {
 				throw new Exception("STO_ERR_MODULE_CREATION");
 			}
 			else {
-				module.importModule(); // logs in imports superviser
+				module.invokeAction("ModuleImport"); // logs in imports superviser
 				return module.getRowId();
 			}
 		}

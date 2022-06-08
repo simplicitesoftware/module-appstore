@@ -7,19 +7,19 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.simplicite.modules</groupId>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.3-SNAPSHOT</version>
   <artifactId>SimStore</artifactId>
   <name>SimStore</name>
   <description>Simplicite module: SimStore</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <simplicite.url>https://scamprdp.demo.simplicite.io</simplicite.url>
+    <simplicite.url>https://testdaz.dev.simplicite.io</simplicite.url>
     <simplicite.version>5.2-SNAPSHOT</simplicite.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <sonar.projectKey>simplicite-modules-SimStore</sonar.projectKey>
     <sonar.projectName>SimStore</sonar.projectName>
-    <sonar.projectVersion>1.2</sonar.projectVersion>
+    <sonar.projectVersion>1.3</sonar.projectVersion>
     <sonar.sources>src,resources</sonar.sources>
     <sonar.exclusions>**.min.js,**.min.css</sonar.exclusions>
     <sonar.coverage.exclusions>resources/**.js,src/**.java</sonar.coverage.exclusions>
@@ -49,6 +49,11 @@ ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
             <exclude>BPMProcess/**</exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.3.2</version>
       </plugin>
     </plugins>
   </build>

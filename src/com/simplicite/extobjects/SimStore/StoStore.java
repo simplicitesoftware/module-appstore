@@ -12,6 +12,9 @@ import com.simplicite.util.Tool;
 import com.simplicite.util.tools.HTMLTool;
 import com.simplicite.util.tools.Parameters;
 
+/**
+ * App store
+ */
 public class StoStore extends ExternalObject {
 	private static final long serialVersionUID = 1L;
 
@@ -23,17 +26,16 @@ public class StoStore extends ExternalObject {
 			int storeIdx = params.getIntParameter("storeidx", 0);
 			JSONObject data = getData(getGrant());
 
-
 			// EMPTY PARAM => display page
-			if (Tool.isEmpty(installModule) || ! params.has("storeidx")) {
+			if (Tool.isEmpty(installModule) || !params.has("storeidx")) {
 				addMustache();
 				return javascript("Store.fire(" + data.toString() + ")");
 			}
-
 			// HAS PARAM => call install
 			else {
 				setJSONMIMEType();
-				return jsonResponseFromInstallAttempt(data, installModule, storeIdx, getGrant());
+				boolean track = params.getBooleanParameter("track", false);
+				return jsonResponseFromInstallAttempt(data, installModule, storeIdx, getGrant(), track);
 			}
 		} catch (Exception e) {
 			AppLog.error(getClass(), "display", null, e, getGrant());
@@ -81,11 +83,11 @@ public class StoStore extends ExternalObject {
 		return data;
 	}
 
-	private JSONObject jsonResponseFromInstallAttempt(JSONObject data, String installModule, int storeIdx, Grant g) {
+	private JSONObject jsonResponseFromInstallAttempt(JSONObject data, String installModule, int storeIdx, Grant g, boolean track) {
 		JSONObject store = data.getJSONArray("stores").getJSONObject(storeIdx);
 		JSONObject app = getAppFromModuleName(store.getJSONArray("apps"), installModule);
 		try {
-			String moduleId = installAndGetId(app, g);
+			String moduleId = installAndGetId(app, g, track);
 			//TODO do directly in method?
 			app.put("module_installed", moduleId);
 			return data;
@@ -95,7 +97,7 @@ public class StoStore extends ExternalObject {
 		}
 	}
 
-	private static String installAndGetId(JSONObject app, Grant g) throws Exception {
+	private static String installAndGetId(JSONObject app, Grant g, boolean track) throws Exception {
 		if (app==null) {
 			throw new Exception("STO_ERR_MODULE_NOT_FOUND");
 		}
@@ -113,7 +115,9 @@ public class StoStore extends ExternalObject {
 				throw new Exception("STO_ERR_MODULE_CREATION");
 			}
 			else {
-				module.invokeAction("ModuleImport"); // logs in imports superviser
+				// async use in UI tracker = ModuleImport must be launched by front
+				if (!track)
+					module.invokeAction("ModuleImport"); // logs in imports superviser
 				return module.getRowId();
 			}
 		}

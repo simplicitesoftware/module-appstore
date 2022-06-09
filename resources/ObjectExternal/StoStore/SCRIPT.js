@@ -44,24 +44,66 @@ var Store = (function() {
 	}
 	
 	function callInstall() {
-		$ui.view.showLoading();
 		var module = $(this).data('module');
 		var storeIdx = $(this).data('store-idx');
-		$.ajax({
-			'url': data.install_url+"?install="+module+"&storeidx="+storeIdx,
-			'type': 'GET',
-			'success': function(updated_data) {
-				data = prepareData(updated_data);
-				render(storeIdx);
-				$ui.view.hideLoading();
-				optionalClearCache();
-			},
-			'error': function(request,error) {
-				alert("Request: "+JSON.stringify(request));
-			}
-		});
+		var url = data.install_url+"?install="+module+"&storeidx="+storeIdx;
+		$ui.view.showLoading();
+
+		// 5.4 asynchronous install with tracking
+		if ($ui.view.form.tracker) {
+			// 1) only create one empty module on server side
+			$.ajax({
+				url: url + "&track=true",
+				type: 'GET',
+				success: function(updated_data) {
+					data = prepareData(updated_data);
+					render(storeIdx);
+					install(module);
+				},
+				error: function(request,error) {
+					alert("Request: "+JSON.stringify(request));
+				}
+			});
+
+		}
+		else { // legacy synchronous
+			$.ajax({
+				url: url,
+				type: 'GET',
+				success: function(updated_data) {
+					data = prepareData(updated_data);
+					render(storeIdx);
+					$ui.view.hideLoading();
+					optionalClearCache();
+				},
+				error: function(request,error) {
+					alert("Request: "+JSON.stringify(request));
+				}
+			});
+		}
 	}
 	
+	function install(module) {
+		// 2) launch ModuleImport on client to track the progression
+		var m = $ui.getApp().getBusinessObject("Module","store_ajax_Module");
+		m.search({ mdl_name: module }).then(l => {
+			m.item = l[0];
+			m.action("ModuleImport"); // async
+			$ui.view.hideLoading();
+			var dlg = $ui.view.form.tracker({ name:"tkstore" }, {
+				title: "Import " + module,
+				progress: fn => {
+					m.action("ModuleImport", { track:true }).then(fn);
+				},
+				done: () => {
+					$ui.view.tools.dialogClose(dlg);
+					optionalClearCache();
+				},
+				bar: $('<div/>') // empty action bar 
+			});
+		});
+	}
+
 	function optionalClearCache() {
 		$ui.view.tools.dialog({
 			title: $ui.getAjax().T("INFO"),

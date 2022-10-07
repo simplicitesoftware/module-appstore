@@ -5,7 +5,7 @@
 	<action>upsert</action>
 	<data>
 		<mdl_name>SimStore</mdl_name>
-		<mdl_version>1.4</mdl_version>
+		<mdl_version>1.5</mdl_version>
 		<mdl_prefix>sto</mdl_prefix>
 		<mdl_url><![CDATA[{
 	"type": "git",
@@ -322,6 +322,16 @@ mvn verify sonar:sonar
 		<res_cached>0</res_cached>
 		<res_file>resources/ObjectExternal/StoStore/SCRIPT.js</res_file>
 		<res_image/>
+		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
+	</data>
+</object>
+<object>
+	<name>Script</name>
+	<action>upsert</action>
+	<data>
+		<scr_code>Version</scr_code>
+		<scr_file>src/com/simplicite/commons/SimStore/Version.java</scr_file>
+		<scr_type>JSR</scr_type>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
 </object>

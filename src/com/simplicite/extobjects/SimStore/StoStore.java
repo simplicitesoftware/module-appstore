@@ -9,8 +9,11 @@ import com.simplicite.util.ExternalObject;
 import com.simplicite.util.Grant;
 import com.simplicite.util.ObjectDB;
 import com.simplicite.util.Tool;
+import com.simplicite.util.Globals;
 import com.simplicite.util.tools.HTMLTool;
 import com.simplicite.util.tools.Parameters;
+
+import com.simplicite.commons.SimStore.Version;
 
 /**
  * App store
@@ -68,6 +71,13 @@ public class StoStore extends ExternalObject {
 						"module_installed",
 						moduleId(apps.getJSONObject(j).optString("module_name"), getGrant())
 					);
+					apps.getJSONObject(j).put(
+						"incompatible",
+						getIncompatibilityMessage(
+							apps.getJSONObject(j).optString("min_version"),
+							apps.getJSONObject(j).optString("max_version")
+						)
+					);
 					apps.getJSONObject(j).put("store_idx", i);
 				}
 				stores.put(store);
@@ -81,6 +91,25 @@ public class StoStore extends ExternalObject {
 		data.put("install_url", HTMLTool.getExternalObjectURL("StoStore"));
 		data.put("stores", stores);
 		return data;
+	}
+	
+	private String getIncompatibilityMessage(String minVersion, String maxVersion){
+		try{
+			Version platform = new Version(Globals.getPlatformFullVersion());
+			String msg = null;
+			
+			if(!Tool.isEmpty(minVersion) && platform.compareTo(new Version(minVersion))==-1)
+				msg = "Requires Simplicité >= " + minVersion;
+			
+			if(!Tool.isEmpty(maxVersion) && platform.compareTo(new Version(maxVersion))==1)
+				msg = msg==null ? "Requires Simplicité <= "+maxVersion : msg+" and <= "+maxVersion;
+			
+			return msg;
+		}
+		catch(IllegalArgumentException e){
+			AppLog.error(e, getGrant());
+			return null;
+		}
 	}
 
 	private JSONObject jsonResponseFromInstallAttempt(JSONObject data, String installModule, int storeIdx, Grant g, boolean track) {

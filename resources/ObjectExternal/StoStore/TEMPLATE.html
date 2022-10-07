@@ -18,6 +18,14 @@
 								{{{description}}}
 								{{#url}}<br/><a class="btn btn-sm btn-light" target="_blank" href="{{url}}">Read more</a>{{/url}}
 							</p>
+							
+							{{#incompatible}}
+							<div class="alert alert-info" role="alert">
+								{{incompatible}}
+							</div>
+							{{/incompatible}}
+							
+							{{^incompatible}}
 							<div class="storecard__buttoncontainer">
 							{{#module_installed}}
 								<button
@@ -37,6 +45,8 @@
 									data-store-idx="{{store_idx}}">{{tsl_install_module}}</button>
 							{{/module_installed}}
 							</div>
+							{{/incompatible}}
+							
 						</div>
 					</div>
 				</div>

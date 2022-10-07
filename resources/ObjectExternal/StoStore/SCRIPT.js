@@ -32,13 +32,6 @@ var Store = (function() {
 	}
 	
 	function prepareData(src) {
-		src.stores.map(function(store) {
-			store.apps.map(function(app) {
-				app.module_settings = JSON.stringify(app.module_settings, null, 4);
-				return app;
-			});
-			return store;
-		});
 		$.extend(src, JSON.parse($ui.getAjax().T('STO_FRONT_TEXTS')));
 		return src;
 	}

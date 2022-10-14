@@ -1,4 +1,4 @@
-var Store = /*Store || */(function() {
+var StoStore = StoStore || (function() {
 	let data;
 
 	function fire(src) {

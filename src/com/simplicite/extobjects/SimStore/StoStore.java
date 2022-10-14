@@ -12,6 +12,7 @@ import com.simplicite.util.ObjectDB;
 import com.simplicite.util.Tool;
 import com.simplicite.util.tools.HTMLTool;
 import com.simplicite.util.tools.Parameters;
+import com.simplicite.util.exceptions.PlatformException;
 
 /**
  * App store
@@ -76,6 +77,11 @@ public class StoStore extends ExternalObject {
 				return false;
 			return compareTo((Version) that) == 0;
 		}
+		
+		@Override
+		public int hashCode() {
+			return get().hashCode();
+		}
 
 		public boolean isOlderThan(Object that) {
 			if (this == that || that == null || getClass() != that.getClass())
@@ -101,7 +107,7 @@ public class StoStore extends ExternalObject {
 			// EMPTY PARAM => display page
 			if (Tool.isEmpty(installModule) || !params.has("storeidx")) {
 				addMustache();
-				return javascript("Store.fire(" + data.toString() + ")");
+				return javascript("StoStore.fire(" + data.toString() + ")");
 			}
 			// HAS PARAM => call install
 			else {
@@ -222,16 +228,16 @@ public class StoStore extends ExternalObject {
 			return data;
 		}
 		catch (Exception e) {
-			return new JSONObject("{'error': '"+e.getMessage()+"'}");
+			return new JSONObject().put("error", e.getMessage());
 		}
 	}
 
-	private static String installAndGetId(JSONObject app, Grant g, boolean track) throws Exception {
+	private static String installAndGetId(JSONObject app, Grant g, boolean track) throws PlatformException {
 		if (app==null) {
-			throw new Exception("STO_ERR_MODULE_NOT_FOUND");
+			throw new PlatformException("STO_ERR_MODULE_NOT_FOUND");
 		}
 		else if (!Tool.isEmpty(app.getString("module_installed"))) {
-			throw new Exception("STO_ERR_MODULE_ALREADY_PRESENT");
+			throw new PlatformException("STO_ERR_MODULE_ALREADY_PRESENT");
 		}
 		else {
 			ObjectDB module = g.getTmpObject("Module");
@@ -240,8 +246,8 @@ public class StoStore extends ExternalObject {
 			module.setFieldValue("mdl_url", getModuleSettingsFromApp(app));
 			String create = module.create();
 			if (create!=null) {
-				AppLog.error(StoStore.class, "install", "Create module error: "+create, null, g);
-				throw new Exception("STO_ERR_MODULE_CREATION");
+				AppLog.error(StoStore.class, "install", "Create module error: " + create, null, g);
+				throw new PlatformException("STO_ERR_MODULE_CREATION");
 			}
 			else {
 				// async use in UI tracker = ModuleImport must be launched by front

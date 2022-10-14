@@ -7,10 +7,10 @@ var StoStore = StoStore || (function() {
 	}
 	
 	function render(tab_index) {
-		const r = $(Mustache.render($('#store-template').html(), data));
+		const r = $(Mustache.render($('#stostore-template').html(), data));
 		// tab initialization
 		r.find('.tabitem').hide();
-		r.find('#store-tab'+tab_index).show();
+		r.find('#stostore-tab'+tab_index).show();
 		r.find('.nav li[data-tab="'+tab_index+'"]').addClass('active');
 		r.find('.nav li').click(tab);
 		
@@ -21,15 +21,15 @@ var StoStore = StoStore || (function() {
 		r.find('.goto-delete').click(function() {
 			$ui.displayModuleDelete(null, $(this).data('module-id'));
 		});
-		$('#store').html(r);
+		$('#stostore').html(r);
 	}
 
 	function tab() {
-		$('#store .nav li').removeClass('active');
+		$('#stostore .nav li').removeClass('active');
 		$(this).addClass('active');
 		
-		$('#store .tabitem').hide();
-		$('#store-tab'+$(this).data('tab')).show();
+		$('#stostore .tabitem').hide();
+		$('#stostore-tab'+$(this).data('tab')).show();
 	}
 	
 	function prepareData(src) {

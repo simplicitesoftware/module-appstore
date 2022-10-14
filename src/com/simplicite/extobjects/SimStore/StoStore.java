@@ -127,14 +127,10 @@ public class StoStore extends ExternalObject {
 		}
 	}
 
-	private static String readURL(String url, int timeout) {
-		try {
-			HttpClient client = HttpClient.newHttpClient();
-			HttpRequest request = HttpRequest.newBuilder(URI.create(url)).timeout(Duration.ofMillis((long)timeout * 1000)).build();
-			return client.send(request, BodyHandlers.ofString()).body();
-		} catch(Exception e) {
-			return null;
-		}
+	private static String readURL(String url, int timeout) throws Exception {
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder(URI.create(url)).timeout(Duration.ofMillis((long)timeout * 1000)).build();
+		return client.send(request, BodyHandlers.ofString()).body();
 	}
 
 	private JSONObject getVersions() {

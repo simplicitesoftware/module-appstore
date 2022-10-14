@@ -3,7 +3,7 @@
 	<div class="alert alert-danger">
 		<h1><i class="fas fa-fw fa-exclamation-triangle"></i> Version warning</h1>
 		<p>Your version <b>{{local.version}}</b> <i>(released on {{local.date}})</i> is older than the <u>current</u> version <b>{{current.version}}</b> <i>(released on {{current.date}})</i>.<br/>
-		See the <a href="https://docs.simplicite.io/{{major}}/releasenote/releasenote-{{minor}}.md#version-{{current.version}}" target="_blank">release note</a> for details.</p>
+		See the <a href="{{resources_url}}{{major}}/releasenote/releasenote-{{minor}}.md#version-{{current.version}}" target="_blank">release note</a> for details.</p>
 		<h3>You <b>should</b> consider upgrading.</h3>
 	</div>
 	{{/versions}}
@@ -28,7 +28,7 @@
 							</p>
 							
 							{{#incompatible}}
-							<div class="alert alert-info" role="alert">
+							<div class="alert alert-warning" role="alert">
 								{{incompatible}}
 							</div>
 							{{/incompatible}}

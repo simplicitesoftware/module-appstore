@@ -2,7 +2,6 @@ var Store = /*Store || */(function() {
 	let data;
 
 	function fire(src) {
-		console.log(src);
 		data = prepareData(src);
 		render(0);
 	}

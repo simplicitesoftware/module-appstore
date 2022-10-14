@@ -115,8 +115,6 @@ public class StoStore extends ExternalObject {
 		}
 	}
 
-	private static final String VERSIONS_URL = "https://docs.simplicite.io/versions.json";
-
 	private JSONObject getData(Grant g) throws Exception{
 		JSONArray stores = new JSONArray();
 		String s = g.getParameter("STORE_SOURCE", "[]");
@@ -160,13 +158,14 @@ public class StoStore extends ExternalObject {
 			}
 		}
 
+		String resUrl = Globals.getPlatformResourcesURL();
 		JSONObject versions = null;
 		try {
 			Version version = new Version(Globals.getPlatformFullVersion());
 			String major = version.getMajor();
 			String minor = version.getMinor();
 
-			JSONObject current = new JSONObject(Tool.readUrl(VERSIONS_URL))
+			JSONObject current = new JSONObject(Tool.readUrl(resUrl + "versions.json"))
 				.getJSONObject("platform").getJSONObject(minor);
 
 			JSONObject local = new JSONObject()
@@ -179,17 +178,16 @@ public class StoStore extends ExternalObject {
 					.put("major", major)
 					.put("minor", minor)
 					.put("current", current)
-					.put("local", local);
+					.put("local", local)
+					.put("resources_url", resUrl);
 		} catch (Exception e) {
-			AppLog.error(getClass(), "getData", "Unable to get versions from URL: " + VERSIONS_URL, e, getGrant());
+			AppLog.error(getClass(), "getData", "Unable to get versions from URL: " + resUrl, e, getGrant());
 		}
 
-		JSONObject data = new JSONObject();
-		// facilitate install url
-		data.put("install_url", HTMLTool.getExternalObjectURL("StoStore"));
-		data.put("stores", stores);
-		data.put("versions", versions);
-		return data;
+		return new JSONObject()
+			.put("install_url", HTMLTool.getExternalObjectURL("StoStore")) // facilitate install URL
+			.put("stores", stores)
+			.put("versions", versions);
 	}
 
 	private String getIncompatibilityMessage(String minVersion, String maxVersion){

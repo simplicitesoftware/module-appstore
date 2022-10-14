@@ -5,7 +5,7 @@
 	<action>upsert</action>
 	<data>
 		<mdl_name>SimStore</mdl_name>
-		<mdl_version>1.7</mdl_version>
+		<mdl_version>1.8</mdl_version>
 		<mdl_prefix>sto</mdl_prefix>
 		<mdl_url><![CDATA[{
 	"type": "git",

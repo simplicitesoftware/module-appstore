@@ -22,46 +22,72 @@ public class StoStore extends ExternalObject {
 	private class Version implements Comparable<Version> {
 	    private String version;
 	
-	    public final String get() {
-	        return this.version;
-	    }
-	
 	    public Version(String version) {
-	        if(version == null)
+	        if (version == null)
 	            throw new IllegalArgumentException("Version can not be null");
-	        if(!version.matches("^[0-9]+(\\.[0-9]+)*(-.*)?$"))
+	        if (!version.matches("^[0-9]+(\\.[0-9]+)*(-.*)?$"))
 	            throw new IllegalArgumentException("Invalid version format: " + version);
 	        this.version = version;
 	    }
 	
-	    @Override public int compareTo(Version that) {
-	        if(that == null)
+	    public final String get() {
+	        return version;
+	    }
+	
+		private String[] split() {
+			return get().replaceFirst("-.*$", "").split("\\.");
+		}
+
+	    public String getMajor() {
+	    	String[] parts = split();
+	    	return parts.length>0 ? parts[0] : "";
+	    }
+
+	    public String getMinor() {
+	    	String[] parts = split();
+	    	return parts.length>1 ? parts[0] + "." + parts[1] : getMajor();
+	    }
+
+	    @Override
+	    public int compareTo(Version that) {
+	        if (that == null)
 	            return 1;
-	        String[] thisParts = this.get().replaceFirst("-.*$", "").split("\\.");
-	        String[] thatParts = that.get().replaceFirst("-.*$", "").split("\\.");
+	        String[] thisParts = split();
+	        String[] thatParts = that.split();
 	        int length = Math.max(thisParts.length, thatParts.length);
-	        for(int i = 0; i < length; i++) {
+	        for (int i = 0; i < length; i++) {
 	            int thisPart = i < thisParts.length ?
 	                Integer.parseInt(thisParts[i]) : 0;
 	            int thatPart = i < thatParts.length ?
 	                Integer.parseInt(thatParts[i]) : 0;
-	            if(thisPart < thatPart)
+	            if (thisPart < thatPart)
 	                return -1;
-	            if(thisPart > thatPart)
+	            if (thisPart > thatPart)
 	                return 1;
 	        }
 	        return 0;
 	    }
-	
-	    @Override public boolean equals(Object that) {
-	        if(this == that)
+
+	    @Override
+	    public boolean equals(Object that) {
+	        if (this == that)
 	            return true;
-	        if(that == null)
+	        if (that == null || getClass() != that.getClass())
 	            return false;
-	        if(this.getClass() != that.getClass())
-	            return false;
-	        return this.compareTo((Version) that) == 0;
+	        return compareTo((Version) that) == 0;
 	    }
+
+	    public boolean isOlderThan(Object that) {
+	        if (this == that || that == null || getClass() != that.getClass())
+	            return false;
+	        return compareTo((Version) that) < 0;
+		}
+
+	    public boolean isNewerThan(Object that) {
+	        if (this == that || that == null || getClass() != that.getClass())
+	            return false;
+	        return compareTo((Version) that) > 0;
+		}
 	}
 
 	@Override
@@ -89,6 +115,8 @@ public class StoStore extends ExternalObject {
 		}
 	}
 
+	private static final String VERSIONS_URL = "https://docs.simplicite.io/versions.json";
+
 	private JSONObject getData(Grant g) throws Exception{
 		JSONArray stores = new JSONArray();
 		String s = g.getParameter("STORE_SOURCE", "[]");
@@ -98,9 +126,12 @@ public class StoStore extends ExternalObject {
 		} catch (JSONException e) {
 			sources = new JSONArray(s); // old syntax (single store)
 		}
+
 		for (int i=0; i<sources.length(); i++) {
+			String url = null;
 			try {
-				JSONObject store = new JSONObject(Tool.readUrl(sources.getString(i)));
+				url = sources.getString(i);
+				JSONObject store = new JSONObject(Tool.readUrl(url));
 
 				// use a store id to identify tabs
 				store.put("idx", i);
@@ -125,28 +156,54 @@ public class StoStore extends ExternalObject {
 				}
 				stores.put(store);
 			} catch (Exception e) {
-				AppLog.error(getClass(), "getData", null, e, getGrant());
+				AppLog.error(getClass(), "getData", "Unable to get store data" + (url==null ? "" : " from URL: " + url), e, getGrant());
 			}
+		}
+		
+		JSONObject versions = null;
+		try {
+			Version version = new Version(Globals.getPlatformFullVersion());
+			String major = version.getMajor();
+			String minor = version.getMinor();
+			
+			JSONObject current = new JSONObject(Tool.readUrl(VERSIONS_URL))
+				.getJSONObject("platform").getJSONObject(minor);
+
+			JSONObject local = new JSONObject()
+				.put("version", Globals.getPlatformFullVersion())
+				.put("date", Globals.getPlatformBuildDate());
+
+			// The local revision is older than the current revision of the same minor version
+			if (version.isOlderThan(new Version(current.getString("version"))))
+				versions = new JSONObject()
+					.put("major", Globals.getPlatformVersion())
+					.put("minor", minor)
+					.put("current", current)
+					.put("local", local);
+		} catch (Exception e) {
+			AppLog.error(getClass(), "getData", "Unable to get versions from URL: " + VERSIONS_URL, e, getGrant());
 		}
 
 		JSONObject data = new JSONObject();
 		// facilitate install url
 		data.put("install_url", HTMLTool.getExternalObjectURL("StoStore"));
 		data.put("stores", stores);
+		data.put("versions", versions);
 		return data;
 	}
 	
 	private String getIncompatibilityMessage(String minVersion, String maxVersion){
 		try{
-			Version platform = new Version(Globals.getPlatformFullVersion());
+			Version version = new Version(Globals.getPlatformFullVersion());
 			String msg = null;
 
-			AppLog.info("Version " + platform + " vs " + minVersion + " " + maxVersion, getGrant());
+			if (AppLog.isDebug())
+				AppLog.debug("Version " + version + " vs " + minVersion + " " + maxVersion, getGrant());
 			
-			if(!Tool.isEmpty(minVersion) && platform.compareTo(new Version(minVersion))<0)
+			if (!Tool.isEmpty(minVersion) && version.isOlderThan(new Version(minVersion)))
 				msg = "Requires Simplicité >= " + minVersion;
 			
-			if(!Tool.isEmpty(maxVersion) && platform.compareTo(new Version(maxVersion))>0)
+			if (!Tool.isEmpty(maxVersion) && version.isNewerThan(new Version(maxVersion)))
 				msg = msg==null ? "Requires Simplicité <= "+maxVersion : msg+" and <= "+maxVersion;
 			
 			return msg;

@@ -1,15 +1,17 @@
-var Store = (function() {
-	var data;
+var Store = /*Store || */(function() {
+	let data;
+
 	function fire(src) {
+		console.log(src);
 		data = prepareData(src);
 		render(0);
 	}
 	
 	function render(tab_index) {
-		var r = $(Mustache.render($('#tmplStore').html(), data));
+		const r = $(Mustache.render($('#store-template').html(), data));
 		// tab initialization
 		r.find('.tabitem').hide();
-		r.find('#tab'+tab_index).show();
+		r.find('#store-tab'+tab_index).show();
 		r.find('.nav li[data-tab="'+tab_index+'"]').addClass('active');
 		r.find('.nav li').click(tab);
 		
@@ -28,7 +30,7 @@ var Store = (function() {
 		$(this).addClass('active');
 		
 		$('#store .tabitem').hide();
-		$('#tab'+$(this).data('tab')).show();
+		$('#store-tab'+$(this).data('tab')).show();
 	}
 	
 	function prepareData(src) {
@@ -37,9 +39,9 @@ var Store = (function() {
 	}
 	
 	function callInstall() {
-		var module = $(this).data('module');
-		var storeIdx = $(this).data('store-idx');
-		var url = data.install_url+"?install="+module+"&storeidx="+storeIdx;
+		const module = $(this).data('module');
+		const storeIdx = $(this).data('store-idx');
+		const url = data.install_url+"?install="+module+"&storeidx="+storeIdx;
 		$ui.view.showLoading();
 
 		// 5.4 asynchronous install with tracking
@@ -78,12 +80,12 @@ var Store = (function() {
 	
 	function install(module) {
 		// 2) launch ModuleImport on client to track the progression
-		var m = $ui.getApp().getBusinessObject("Module","store_ajax_Module");
+		const m = $ui.getApp().getBusinessObject("Module","store_ajax_Module");
 		m.search({ mdl_name: module }).then(l => {
 			m.item = l[0];
 			m.action("ModuleImport"); // async
 			$ui.view.hideLoading();
-			var dlg = $ui.view.form.tracker({ name:"tkstore" }, {
+			const dlg = $ui.view.form.tracker({ name:"tkstore" }, {
 				title: "Import " + module,
 				progress: fn => {
 					m.action("ModuleImport", { track:true }).then(fn);

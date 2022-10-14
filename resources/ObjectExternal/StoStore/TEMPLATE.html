@@ -1,4 +1,12 @@
-<script id="tmplStore" type="text/template">
+<template id="store-template">
+	{{#versions}}
+	<div id="store-alert" class="alert alert-danger" style="text-align: center;">
+		<h1><i class="fas fa-fw fa-exclamation-triangle"></i> Version warning</h1>
+		<p>Your version <b>{{local.version}}</b> <i>(released on {{local.date}})</i> is older than the <u>current</u> version <b>{{current.version}}</b> <i>(released on {{current.date}})</i>.<br/>
+		See the <a href="https://docs.simplicite.io/{{major}}/releasenote/releasenote-{{minor}}.md#version-{{current.version}}" target="_blank">release note</a> for details.</p>
+		<h3>You <b>should</b> consider upgrading.</h3>
+	</div>
+	{{/versions}}
 	<div>
 		<ul class="nav nav-tabs">
 			{{#stores}}
@@ -6,7 +14,7 @@
 			{{/stores}}
 		</ul>
 		{{#stores}}
-		<div id="tab{{idx}}" class="tabitem store-container">
+		<div id="store-tab{{idx}}" class="tabitem store-container">
 		<div class="storegrid">
 			{{#apps}}
 				<div class="storegrid__item">
@@ -55,5 +63,5 @@
 		</div>
 		{{/stores}}
 	</div>
-</script>
+</template>
 <div id="store"></div>

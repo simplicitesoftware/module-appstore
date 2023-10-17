@@ -1,11 +1,5 @@
 package com.simplicite.extobjects.SimStore;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.time.Duration;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,9 +10,9 @@ import com.simplicite.util.Globals;
 import com.simplicite.util.Grant;
 import com.simplicite.util.ObjectDB;
 import com.simplicite.util.Tool;
-import com.simplicite.util.exceptions.PlatformException;
 import com.simplicite.util.tools.HTMLTool;
 import com.simplicite.util.tools.Parameters;
+import com.simplicite.util.exceptions.PlatformException;
 
 /**
  * App store
@@ -83,7 +77,7 @@ public class StoStore extends ExternalObject {
 				return false;
 			return compareTo((Version) that) == 0;
 		}
-
+		
 		@Override
 		public int hashCode() {
 			return get().hashCode();
@@ -127,43 +121,7 @@ public class StoStore extends ExternalObject {
 		}
 	}
 
-	private static String readURL(String url, int timeout) throws Exception {
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder(URI.create(url)).timeout(Duration.ofMillis((long)timeout * 1000)).build();
-		return client.send(request, BodyHandlers.ofString()).body();
-	}
-
-	private JSONObject getVersions() {
-		String resUrl = Globals.getPlatformResourcesURL();
-		JSONObject versions = null;
-		try {
-			Version version = new Version(Globals.getPlatformFullVersion());
-			String major = version.getMajor();
-			String minor = version.getMinor();
-
-			JSONObject current = new JSONObject(readURL(resUrl + "versions.json", 1))
-				.getJSONObject("platform").getJSONObject(minor);
-			current.put("expired", "expired".equals(current.optString("maintenance", "")));
-
-			JSONObject local = new JSONObject()
-				.put("version", Globals.getPlatformFullVersion())
-				.put("date", Globals.getPlatformBuildDate());
-
-			// If the local revision is older than the current revision of the same minor version
-			if (version.isOlderThan(new Version(current.getString("version"))))
-				versions = new JSONObject()
-					.put("major", major)
-					.put("minor", minor)
-					.put("current", current)
-					.put("local", local)
-					.put("resources_url", resUrl);
-		} catch (Exception e) {
-			AppLog.error(getClass(), "getVersions", "Unable to get versions from URL: " + resUrl, e, getGrant());
-		}
-		return versions;
-	}
-
-	private JSONObject getData(Grant g) throws Exception {
+	private JSONObject getData(Grant g) throws Exception{
 		JSONArray stores = new JSONArray();
 		String s = g.getParameter("STORE_SOURCE", "[]");
 		JSONArray sources;
@@ -177,7 +135,7 @@ public class StoStore extends ExternalObject {
 			String url = null;
 			try {
 				url = sources.getString(i);
-				JSONObject store = new JSONObject(readURL(url, 10));
+				JSONObject store = new JSONObject(Tool.readUrl(url));
 
 				// use a store id to identify tabs
 				store.put("idx", i);
@@ -206,10 +164,36 @@ public class StoStore extends ExternalObject {
 			}
 		}
 
+		String resUrl = Globals.getPlatformResourcesURL();
+		JSONObject versions = null;
+		try {
+			Version version = new Version(Globals.getPlatformFullVersion());
+			String major = version.getMajor();
+			String minor = version.getMinor();
+
+			JSONObject current = new JSONObject(Tool.readUrl(resUrl + "versions.json"))
+				.getJSONObject("platform").getJSONObject(minor);
+
+			JSONObject local = new JSONObject()
+				.put("version", Globals.getPlatformFullVersion())
+				.put("date", Globals.getPlatformBuildDate());
+
+			// The local revision is older than the current revision of the same minor version
+			if (version.isOlderThan(new Version(current.getString("version"))))
+				versions = new JSONObject()
+					.put("major", major)
+					.put("minor", minor)
+					.put("current", current)
+					.put("local", local)
+					.put("resources_url", resUrl);
+		} catch (Exception e) {
+			AppLog.error(getClass(), "getData", "Unable to get versions from URL: " + resUrl, e, getGrant());
+		}
+
 		return new JSONObject()
 			.put("install_url", HTMLTool.getExternalObjectURL("StoStore")) // facilitate install URL
 			.put("stores", stores)
-			.put("versions", getVersions());
+			.put("versions", versions);
 	}
 
 	private String getIncompatibilityMessage(String minVersion, String maxVersion){

@@ -9,9 +9,8 @@
 		<mdl_prefix>sto</mdl_prefix>
 		<mdl_url><![CDATA[{
 	"type": "git",
-	"origin": {
-		"uri": "https://github.com/simplicitesoftware/module-simstore.git"
-	}
+	"origin": { "uri": "https://github.com/simplicitesoftware/module-simstore.git" },
+	"branch": "v6"
 }]]></mdl_url>
 		<mdl_type>X</mdl_type>
 		<mdl_comment><![CDATA[[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=simplicite-modules-SimStore&metric=alert_status)](https://sonarcloud.io/dashboard?id=simplicite-modules-SimStore)

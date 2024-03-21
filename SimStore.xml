@@ -5,7 +5,7 @@
 	<action>upsert</action>
 	<data>
 		<mdl_name>SimStore</mdl_name>
-		<mdl_version>2..1</mdl_version>
+		<mdl_version>2.1</mdl_version>
 		<mdl_prefix>sto</mdl_prefix>
 		<mdl_url><![CDATA[{
     "origin": {"uri": "https://github.com/simplicitesoftware/module-simstore.git"},

@@ -5,12 +5,12 @@
 	<action>upsert</action>
 	<data>
 		<mdl_name>SimStore</mdl_name>
-		<mdl_version>6.0</mdl_version>
+		<mdl_version>2..1</mdl_version>
 		<mdl_prefix>sto</mdl_prefix>
 		<mdl_url><![CDATA[{
-	"type": "git",
-	"origin": { "uri": "https://github.com/simplicitesoftware/module-simstore.git" },
-	"branch": "v6"
+    "origin": {"uri": "https://github.com/simplicitesoftware/module-simstore.git"},
+    "type": "git",
+    "branch": "v6"
 }]]></mdl_url>
 		<mdl_type>X</mdl_type>
 		<mdl_comment><![CDATA[[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=simplicite-modules-SimStore&metric=alert_status)](https://sonarcloud.io/dashboard?id=simplicite-modules-SimStore)
@@ -146,6 +146,7 @@ mvn verify sonar:sonar
 		<obe_type>E</obe_type>
 		<obe_nature>com_simplicite_util_ExternalObject</obe_nature>
 		<obe_url/>
+		<obe_settings/>
 		<obe_comment><![CDATA[Custom page for adding/removing modules from the stores]]></obe_comment>
 		<obe_help/>
 		<obe_class/>
@@ -181,7 +182,6 @@ mvn verify sonar:sonar
 		<act_color_bg/>
 		<act_group_id.acg_name/>
 		<act_queue_id.acq_name/>
-		<act_queue_id.acq_type/>
 	</data>
 </object>
 <object>
@@ -273,6 +273,7 @@ mvn verify sonar:sonar
 		</tsl_object>
 		<tsl_lang>ENU</tsl_lang>
 		<tsl_value>STO_STORE_INSTALL</tsl_value>
+		<tsl_plural_value/>
 		<tsl_simplehelp/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
@@ -287,6 +288,7 @@ mvn verify sonar:sonar
 		</tsl_object>
 		<tsl_lang>FRA</tsl_lang>
 		<tsl_value>STO_STORE_INSTALL</tsl_value>
+		<tsl_plural_value/>
 		<tsl_simplehelp/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
@@ -305,6 +307,7 @@ mvn verify sonar:sonar
 		</tsl_object>
 		<tsl_lang>ENU</tsl_lang>
 		<tsl_value>App Store</tsl_value>
+		<tsl_plural_value/>
 		<tsl_help/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>
@@ -319,6 +322,7 @@ mvn verify sonar:sonar
 		</tsl_object>
 		<tsl_lang>FRA</tsl_lang>
 		<tsl_value>App Store</tsl_value>
+		<tsl_plural_value/>
 		<tsl_help/>
 		<row_module_id.mdl_name>SimStore</row_module_id.mdl_name>
 	</data>

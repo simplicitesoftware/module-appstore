@@ -55,7 +55,7 @@ public class StoStore extends ExternalObject {
 				return 1;
 			String[] thisParts = split();
 			String[] thatParts = that.split();
-			int length = Math.max(thisParts.length, thatParts.length);
+			int length = Math.min(thisParts.length, thatParts.length);
 			for (int i = 0; i < length; i++) {
 				int thisPart = i < thisParts.length ?
 					Integer.parseInt(thisParts[i]) : 0;
@@ -164,36 +164,9 @@ public class StoStore extends ExternalObject {
 			}
 		}
 
-		String resUrl = Globals.getPlatformResourcesURL();
-		JSONObject versions = null;
-		try {
-			Version version = new Version(Globals.getPlatformFullVersion());
-			String major = version.getMajor();
-			String minor = version.getMinor();
-
-			JSONObject current = new JSONObject(Tool.readUrl(resUrl + "versions.json"))
-				.getJSONObject("platform").getJSONObject(minor);
-
-			JSONObject local = new JSONObject()
-				.put("version", Globals.getPlatformFullVersion())
-				.put("date", Globals.getPlatformBuildDate());
-
-			// The local revision is older than the current revision of the same minor version
-			if (version.isOlderThan(new Version(current.getString("version"))))
-				versions = new JSONObject()
-					.put("major", major)
-					.put("minor", minor)
-					.put("current", current)
-					.put("local", local)
-					.put("resources_url", resUrl);
-		} catch (Exception e) {
-			AppLog.error(getClass(), "getData", "Unable to get versions from URL: " + resUrl, e, getGrant());
-		}
-
 		return new JSONObject()
 			.put("install_url", HTMLTool.getExternalObjectURL("StoStore")) // facilitate install URL
-			.put("stores", stores)
-			.put("versions", versions);
+			.put("stores", stores);
 	}
 
 	private String getIncompatibilityMessage(String minVersion, String maxVersion){

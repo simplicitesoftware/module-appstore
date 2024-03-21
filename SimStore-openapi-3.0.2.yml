@@ -2,7 +2,7 @@
 # / __(_)_ __  _ __| (_)__(_) |_ /_/
 # \__ \ | '  \| '_ \ | / _| |  _/ -_)
 # |___/_|_|_|_| .__/_|_\__|_|\__\___|
-#             |_| Module: SimStore 6.0
+#             |_| Module: SimStore 2..1
 components:
   schemas:
     Error404:
@@ -211,4 +211,4 @@ info:
     email: contact@simplicitesoftware.com
   description: API for module SimStore
   title: SimStore
-  version: '6.0'
+  version: 2..1
